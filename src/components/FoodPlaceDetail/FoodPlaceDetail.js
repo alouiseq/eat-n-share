@@ -1,12 +1,12 @@
 import React from 'react';
-import { Button, View, Text, Image, Modal, StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { Button, View, Text, Image, Modal, StyleSheet, TouchableOpacity } from 'react-native';
 
 let state = { visible: false }
 
 const FoodPlaceDetail = (props) => {
   let detail = null;
 
-  console.log('hello');
   if (props.selectedItem) {
     detail = (
       <View>
@@ -25,11 +25,11 @@ const FoodPlaceDetail = (props) => {
     <View style={styles.foodPlaceDetailContainer}>
       {detail}
       <View>
-        <Button
-          title="Delete"
-          color="red"
-          onPress={props.onItemDelete}
-        />
+        <TouchableOpacity onPress={props.onItemDelete}>
+          <View style={styles.trashIcon}>
+            <Icon size={50} name="ios-trash" color="red" />
+          </View>
+        </TouchableOpacity>
         <Button
           title="Close"
           onPress={props.onModalClose}
@@ -51,6 +51,9 @@ const styles = StyleSheet.create({
   foodPlaceDetailText: {
     fontWeight: 'bold',
     textAlign: 'center'
+  },
+  trashIcon: {
+    alignItems: 'center'
   }
 });
 
