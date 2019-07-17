@@ -2,8 +2,6 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Button, View, Text, Image, Modal, StyleSheet, TouchableOpacity } from 'react-native';
 
-let state = { visible: false }
-
 const FoodPlaceDetail = (props) => {
   let detail = null;
 
