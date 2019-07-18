@@ -25,7 +25,7 @@ export default reducer = (state = initialState, action) => {
       };
     case DELETE_FOOD_PLACE:
       const foodPlaces = state.foodPlaces.filter(fp => (
-        fp.key !== state.selectedItem.key
+        fp.key !== action.foodPlaceKey
       ));
       return {
         ...state,

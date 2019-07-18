@@ -1,32 +1,38 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Button, View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
 
-const FoodPlaceDetail = (props) => {
-  const detail = (
-    <View>
-      <Image
-        style={styles.foodPlaceDetailImage}
-        source={props.selectedItem.image}
-      />
-      <Text style={styles.foodPlaceDetailText}>
-        {props.selectedItem.value}
-      </Text>
-    </View>
-  );
+import { deleteItem } from '../../store/actions/index';
 
-  return (
-    <View style={styles.foodPlaceDetailContainer}>
-      {detail}
-      <View>
-        <TouchableOpacity onPress={props.onItemDelete}>
-          <View style={styles.trashIcon}>
-            <Icon size={50} name="ios-trash" color="red" />
-          </View>
-        </TouchableOpacity>
+class FoodPlaceDetail extends React.Component {
+  onItemDeleteHandler = () => {
+    this.props.onDeleteFoodPlace(this.props.selectedItem.key);
+    this.props.navigator.pop();
+  }
+
+  render () {
+    return (
+      <View style={styles.foodPlaceDetailContainer}>
+        <View>
+          <Image
+            style={styles.foodPlaceDetailImage}
+            source={this.props.selectedItem.image}
+          />
+          <Text style={styles.foodPlaceDetailText}>
+            {this.props.selectedItem.value}
+          </Text>
+        </View>
+        <View>
+          <TouchableOpacity onPress={this.onItemDeleteHandler}>
+            <View style={styles.trashIcon}>
+              <Icon size={50} name="ios-trash" color="red" />
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
-  )
+    )
+  }
 };
 
 const styles = StyleSheet.create({
@@ -47,4 +53,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default FoodPlaceDetail;
+const mapDispatchToProps = dispatch => {
+  return {
+    onDeleteFoodPlace: key => dispatch(deleteItem(key))
+  };
+}
+
+export default connect(null, mapDispatchToProps)(FoodPlaceDetail);

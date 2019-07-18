@@ -30,7 +30,9 @@ Navigation.registerComponent(
 );
 Navigation.registerComponent(
   'rate-n-share-foods.FoodPlaceDetail',
-  () => FoodPlaceDetail
+  () => FoodPlaceDetail,
+  store,
+  Provider
 )
 
 // Start App

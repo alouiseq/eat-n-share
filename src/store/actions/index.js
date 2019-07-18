@@ -14,8 +14,9 @@ export const addItem = (value, image) => {
   };
 };
 
-export const deleteItem = () => {
+export const deleteItem = (key) => {
   return {
-    type: DELETE_FOOD_PLACE
+    type: DELETE_FOOD_PLACE,
+    foodPlaceKey: key
   };
 };
