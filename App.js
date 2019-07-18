@@ -5,7 +5,7 @@ import AuthScreen from './src/screens/Auth/Auth';
 import FoodPlacesScreen from './src/screens/FoodPlaces/FoodPlaces';
 import ShareFoodScreen from './src/screens/ShareFood/ShareFood';
 import configureStore from './src/store/configureStore';
-import { configure } from 'rsvp';
+import FoodPlaceDetail from './src/screens/FoodPlaceDetail/FoodPlaceDetail';
 
 const store = configureStore();
 
@@ -28,6 +28,10 @@ Navigation.registerComponent(
   store,
   Provider
 );
+Navigation.registerComponent(
+  'rate-n-share-foods.FoodPlaceDetail',
+  () => FoodPlaceDetail
+)
 
 // Start App
 Navigation.startSingleScreenApp({

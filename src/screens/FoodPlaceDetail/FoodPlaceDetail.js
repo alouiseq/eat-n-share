@@ -1,25 +1,21 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Button, View, Text, Image, Modal, StyleSheet, TouchableOpacity } from 'react-native';
+import { Button, View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 const FoodPlaceDetail = (props) => {
-  let detail = null;
+  const detail = (
+    <View>
+      <Image
+        style={styles.foodPlaceDetailImage}
+        source={props.selectedItem.image}
+      />
+      <Text style={styles.foodPlaceDetailText}>
+        {props.selectedItem.value}
+      </Text>
+    </View>
+  );
 
-  if (props.selectedItem) {
-    detail = (
-      <View>
-        <Image
-          style={styles.foodPlaceDetailImage}
-          source={props.selectedItem.image}
-        />
-        <Text style={styles.foodPlaceDetailText}>
-          {props.selectedItem.value}
-        </Text>
-      </View>
-    );
-  }
-
-  return <Modal visible={props.selectedItem !== null}>
+  return (
     <View style={styles.foodPlaceDetailContainer}>
       {detail}
       <View>
@@ -28,13 +24,9 @@ const FoodPlaceDetail = (props) => {
             <Icon size={50} name="ios-trash" color="red" />
           </View>
         </TouchableOpacity>
-        <Button
-          title="Close"
-          onPress={props.onModalClose}
-        />
       </View>
     </View>
-  </Modal>
+  )
 };
 
 const styles = StyleSheet.create({
