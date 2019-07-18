@@ -7,6 +7,21 @@ import { addItem } from '../../store/actions/index';
 import sampleImage from '../../../src/assets/lechon.jpg';
 
 class ShareFoodScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
+  }
+
+  onNavigatorEvent = event => {
+    if (event.type === 'NavBarButtonPress') {
+      if (event.id === 'sideDrawerToggle') {
+        this.props.navigator.toggleDrawer({
+          side: 'left'
+        });
+      }
+    }
+  }
+
   onAddFoodPlaceHandler = (foodPlace) => {
     this.props.onAddFoodPlace(foodPlace);
   }

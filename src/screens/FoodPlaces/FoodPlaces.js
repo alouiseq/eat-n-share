@@ -5,6 +5,21 @@ import { connect } from 'react-redux';
 import FoodPlaceList from '../../components/FoodPlaceList/FoodPlaceList';
 
 class FoodPlacesScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
+  }
+
+  onNavigatorEvent = event => {
+    if (event.type === 'NavBarButtonPress') {
+      if (event.id === 'sideDrawerToggle') {
+        this.props.navigator.toggleDrawer({
+          side: 'left'
+        });
+      }
+    }
+  }
+
   itemSelectedHandler = key => {
     const selectedItem = this.props.foodPlaces.find(fp => {
       return fp.key === key;

@@ -6,6 +6,7 @@ import FoodPlacesScreen from './src/screens/FoodPlaces/FoodPlaces';
 import ShareFoodScreen from './src/screens/ShareFood/ShareFood';
 import configureStore from './src/store/configureStore';
 import FoodPlaceDetail from './src/screens/FoodPlaceDetail/FoodPlaceDetail';
+import SideDrawer from './src/screens/SideDrawer/SideDrawer';
 
 const store = configureStore();
 
@@ -33,7 +34,11 @@ Navigation.registerComponent(
   () => FoodPlaceDetail,
   store,
   Provider
-)
+);
+Navigation.registerComponent(
+  'rate-n-share-foods.SideDrawer',
+  () => SideDrawer
+);
 
 // Start App
 Navigation.startSingleScreenApp({
