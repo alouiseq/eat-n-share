@@ -5,11 +5,17 @@ import { connect } from 'react-redux';
 import FoodPlaceInput from '../../components/FoodPlaceInput/FoodPlaceInput';
 import { addItem } from '../../store/actions/index';
 import sampleImage from '../../../src/assets/lechon.jpg';
-import MyTextInput from '../../components/UI/MyTextInput/MyTextInput';
+import PickImage from '../../components/PickImage/PickImage';
+import PickLocation from '../../components/PickLocation/PickLocation';
 import MyText from '../../components/UI/MyText/MyText';
 import MyHeadingText from '../../components/UI/MyHeadingText/MyHeadingText';
+import MyButton from '../../components/UI/MyButton/MyButton';
 
 class ShareFoodScreen extends React.Component {
+  state = {
+    placeName: ''
+  }
+
   constructor(props) {
     super(props);
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
@@ -25,9 +31,25 @@ class ShareFoodScreen extends React.Component {
     }
   }
 
-  onAddFoodPlaceHandler = (foodPlace) => {
-    this.props.onAddFoodPlace(foodPlace);
+  onChangeNameHandler = placeName => {
+    this.setState({ placeName });
   }
+
+  onAddFoodPlaceHandler = () => {
+    const { placeName } = this.state;
+
+    if (placeName.trim() !== '') {
+      this.props.onAddFoodPlace(placeName);
+    }
+  }
+
+  onPickImageHandler = () => (
+    alert('hello')
+  )
+
+  onPickLocationHandler = () => (
+    alert('hello')
+  )
 
   render () {
     return (
@@ -36,19 +58,18 @@ class ShareFoodScreen extends React.Component {
           <MyText>
             <MyHeadingText>Share a food place with us!</MyHeadingText>
           </MyText>
-          <View style={styles.placeholder}><Text>Image Preview!</Text></View>
+          <PickImage onPickImage={this.onPickImageHandler} />
+          <PickLocation onPickLocation={this.onPickLocationHandler} />
+          <FoodPlaceInput
+            placeName={this.state.placeName}
+            onChangeText={this.onChangeNameHandler}
+          />
           <View style={styles.button}>
-            <Button title="Pick Image" />
+            <MyButton
+              title="Share the food place!"
+              onPressHandler={this.onAddFoodPlaceHandler}
+            />
           </View>
-          <View style={styles.placeholder}><Text>Map</Text></View>
-          <View style={styles.button}>
-            <Button title="Locate me" />
-          </View>
-          <MyTextInput placeholder="Food Place Name" />
-          <View style={styles.button}>
-            <Button title="Share the food place!" />
-          </View>
-          {/* <FoodPlaceInput onAddFoodPlace={this.onAddFoodPlaceHandler} /> */}
         </View>
       </ScrollView>
     );
@@ -58,19 +79,13 @@ class ShareFoodScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
+    width: '100%'
   },
   button: {
     margin: 8
   },
-  placeholder: {
-    borderWidth: 1,
-    borderColor: 'black',
-    backgroundColor: '#eee',
-    width: '80%',
-    height: 150
-  }
-})
+});
 
 const mapDispatchToProps = dispatch => {
   return {

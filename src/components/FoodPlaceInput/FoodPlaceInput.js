@@ -1,45 +1,20 @@
 import React from 'react';
-import { Button, View, TextInput, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
-class FoodPlaceInput extends React.Component {
-  state = {
-    currentVal: ''
-  }
-
-  inputChangeHandler = (type) => {
-    this.setState({
-      currentVal: type
-    });
-  }
-
-  render() {
-    return (
-      <View style={styles.userInputContainer}>
-        <TextInput
-          style={styles.userInput}
-          onChangeText={this.inputChangeHandler}
-          placeholder="Add a type of food"
-          value={this.state.currentVal}
-        />
-        <Button
-          title="Add"
-          onPress={() => this.props.onAddFoodPlace(this.state.currentVal)}
-        />
-      </View>
-    )
-  }
-};
+import MyTextInput from '../../components/UI/MyTextInput/MyTextInput';
 
 const styles = StyleSheet.create({
-  userInputContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    marginTop: 20
-  },
-  userInput: {
-    borderColor: 'green',
-    width: 300,
+  container: {
+    width: '100%'
   }
 })
 
-export default FoodPlaceInput;
+export default FoodPlaceInput = props => (
+  <View style={styles.container}>
+    <MyTextInput
+      placeholder="Food Place Name"
+      onChangeText={props.onChangeText}
+      value={props.placeName}
+    />
+  </View>
+)
