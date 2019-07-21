@@ -2,7 +2,7 @@ import React from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  container: {
+  textInput: {
     borderWidth: 1,
     borderColor: 'gray',
     width: '100%',
@@ -16,7 +16,7 @@ export default MainInput = (props) => {
     <View>
       <TextInput
       {...props}
-      style={[styles.container, props.style]}
+      style={[styles.textInput, props.style]}
     />
     </View>
   );

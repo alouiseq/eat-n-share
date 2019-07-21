@@ -2,10 +2,10 @@ import React from 'react';
 import { ImageBackground, View, Text, TextInput, StyleSheet } from 'react-native';
 
 import startMainTabs from '../MainTabs/startMainTabs';
-import Button from '../../UI/Button/Button';
-import MainInput from '../../UI/MainInput/MainInput';
-import MainText from '../../UI/MainText/MainText';
-import HeadingText from '../../UI/HeadingText/HeadingText';
+import Button from '../../components/UI/Button/Button';
+import MainInput from '../../components/UI/MainInput/MainInput';
+import MainText from '../../components/UI/MainText/MainText';
+import HeadingText from '../../components/UI/HeadingText/HeadingText';
 import loginImage from '../../assets/food-phone.jpg';
 
 class AuthScreen extends React.Component {
