@@ -1,11 +1,11 @@
 import React from 'react';
-import { ImageBackground, View, Text, TextInput, StyleSheet } from 'react-native';
+import { ImageBackground, View, StyleSheet } from 'react-native';
 
 import startMainTabs from '../MainTabs/startMainTabs';
-import Button from '../../components/UI/Button/Button';
-import MainInput from '../../components/UI/MainInput/MainInput';
-import MainText from '../../components/UI/MainText/MainText';
-import HeadingText from '../../components/UI/HeadingText/HeadingText';
+import MyButton from '../../components/UI/MyButton/MyButton';
+import MyTextInput from '../../components/UI/MyTextInput/MyTextInput';
+import MyText from '../../components/UI/MyText/MyText';
+import MyHeadingText from '../../components/UI/MyHeadingText/MyHeadingText';
 import loginImage from '../../assets/food-phone.jpg';
 
 class AuthScreen extends React.Component {
@@ -17,16 +17,16 @@ class AuthScreen extends React.Component {
     return (
       <ImageBackground source={loginImage} style={styles.loginImage}>
         <View style={styles.container}>
-          <MainText style={styles.title}>
-            <HeadingText>Please Log In</HeadingText>
-          </MainText>
-          <Button title="Switch to Login" />
+          <MyText style={styles.title}>
+            <MyHeadingText>Please Log In</MyHeadingText>
+          </MyText>
+          <MyButton title="Switch to Login" />
           <View style={styles.textInputContainer}>
-            <MainInput placeholder="Your Email" style={styles.input} />
-            <MainInput placeholder="Password" style={styles.input} />
-            <MainInput placeholder="Confirm Password" style={styles.input} />
+            <MyTextInput placeholder="Your Email" style={styles.input} />
+            <MyTextInput placeholder="Password" style={styles.input} />
+            <MyTextInput placeholder="Confirm Password" style={styles.input} />
           </View>
-          <Button title="Submit" onPressHandler={this.loginHandler} />
+          <MyButton title="Submit" onPressHandler={this.loginHandler} />
         </View>
       </ImageBackground>
     );

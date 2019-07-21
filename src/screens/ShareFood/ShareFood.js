@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import FoodPlaceInput from '../../components/FoodPlaceInput/FoodPlaceInput';
 import { addItem } from '../../store/actions/index';
 import sampleImage from '../../../src/assets/lechon.jpg';
-import MainInput from '../../components/UI/MainInput/MainInput';
-import MainText from '../../components/UI/MainText/MainText';
-import HeadingText from '../../components/UI/HeadingText/HeadingText';
+import MyTextInput from '../../components/UI/MyTextInput/MyTextInput';
+import MyText from '../../components/UI/MyText/MyText';
+import MyHeadingText from '../../components/UI/MyHeadingText/MyHeadingText';
 
 class ShareFoodScreen extends React.Component {
   constructor(props) {
@@ -33,9 +33,9 @@ class ShareFoodScreen extends React.Component {
     return (
       <ScrollView>
         <View style={styles.container}>
-          <MainText>
-            <HeadingText>Share a food place with us!</HeadingText>
-          </MainText>
+          <MyText>
+            <MyHeadingText>Share a food place with us!</MyHeadingText>
+          </MyText>
           <View style={styles.placeholder}><Text>Image Preview!</Text></View>
           <View style={styles.button}>
             <Button title="Pick Image" />
@@ -44,7 +44,7 @@ class ShareFoodScreen extends React.Component {
           <View style={styles.button}>
             <Button title="Locate me" />
           </View>
-          <MainInput placeholder="Food Place Name" />
+          <MyTextInput placeholder="Food Place Name" />
           <View style={styles.button}>
             <Button title="Share the food place!" />
           </View>
