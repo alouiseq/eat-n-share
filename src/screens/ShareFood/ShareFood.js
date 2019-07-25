@@ -12,6 +12,10 @@ import MyHeadingText from '../../components/UI/MyHeadingText/MyHeadingText';
 import MyButton from '../../components/UI/MyButton/MyButton';
 
 class ShareFoodScreen extends React.Component {
+  static navigatorStyle = {
+    navBarButtonColor: 'orange'
+  }
+
   state = {
     placeName: ''
   }

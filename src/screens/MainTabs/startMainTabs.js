@@ -40,6 +40,9 @@ const startTabs = () => {
           }
         }
       ],
+      tabsStyle: {
+        tabBarSelectedButtonColor: 'orange'
+      },
       drawer: {
         left: {
           screen: 'rate-n-share-foods.SideDrawer'

@@ -5,6 +5,10 @@ import { connect } from 'react-redux';
 import FoodPlaceList from '../../components/FoodPlaceList/FoodPlaceList';
 
 class FoodPlacesScreen extends React.Component {
+  static navigatorStyle = {
+    navBarButtonColor: 'orange'
+  }
+
   constructor(props) {
     super(props);
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
