@@ -7,7 +7,7 @@ export const addItem = (value, image) => {
   return {
     type: ADD_FOOD_PLACE,
     foodPlace: {
-      key: Math.random(),
+      key: Math.random().toString(),
       value,
       image
     }
