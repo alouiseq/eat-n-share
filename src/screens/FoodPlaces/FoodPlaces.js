@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import { connect } from 'react-redux';
 
 import FoodPlaceList from '../../components/FoodPlaceList/FoodPlaceList';
@@ -7,6 +7,12 @@ import FoodPlaceList from '../../components/FoodPlaceList/FoodPlaceList';
 class FoodPlacesScreen extends React.Component {
   static navigatorStyle = {
     navBarButtonColor: 'orange'
+  }
+
+  state = {
+    placesLoaded: false,
+    removeAnim: new Animated.Value(1),
+    placesAnim: new Animated.Value(0)
   }
 
   constructor(props) {
@@ -37,13 +43,64 @@ class FoodPlacesScreen extends React.Component {
     });
   }
 
+  placesLoadedHandler = () => {
+    Animated.timing(this.state.placesAnim, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true
+    }).start();
+  }
+
+  placesSearchHandler = () => {
+    Animated.timing(this.state.removeAnim, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: true
+    }).start(() => {
+      this.setState({
+        placesLoaded: true
+      });
+      this.placesLoadedHandler();
+    });
+  }
+
   render () {
-    return (
-      <View>
+    let content = (
+      <Animated.View
+        style={{
+          opacity: this.state.removeAnim,
+          transform: [{
+            scale: this.state.removeAnim.interpolate({
+              inputRange: [0, 1],
+              outputRange: [12, 1]
+            })
+          }]
+        }}>
+        <TouchableOpacity onPress={this.placesSearchHandler}>
+          <View style={styles.searchButton}>
+            <Text style={styles.searchButtonText}>Food Places</Text>
+          </View>
+        </TouchableOpacity>
+      </Animated.View>
+    );
+
+    if (this.state.placesLoaded) {
+      content = (
+      <Animated.View
+        style={{
+          opacity: this.state.placesAnim,
+        }}>
         <FoodPlaceList
           foodPlaces={this.props.foodPlaces}
           onItemSelect={this.itemSelectedHandler}
         />
+      </Animated.View>
+      );
+    }
+
+    return (
+      <View style={this.state.placesLoaded ? null : styles.buttonContainer}>
+        {content}
       </View>
     );
   }
@@ -54,5 +111,24 @@ const mapStateToProps = state => {
     foodPlaces: state.foodPlaces.foodPlaces
   }
 }
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  searchButton: {
+    borderColor: 'orange',
+    borderWidth: 3,
+    borderRadius: 50,
+    padding: 20
+  },
+  searchButtonText: {
+    color: 'orange',
+    fontWeight: 'bold',
+    fontSize: 26
+  }
+})
 
 export default connect(mapStateToProps)(FoodPlacesScreen);
