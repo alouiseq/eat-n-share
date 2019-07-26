@@ -10,7 +10,30 @@ import loginImage from '../../assets/food-phone.jpg';
 
 class AuthScreen extends React.Component {
   state = {
-    viewMode: Dimensions.get('screen').height > 500 ? 'portrait' : 'landscape'
+    viewMode: Dimensions.get('screen').height > 500 ? 'portrait' : 'landscape',
+    controls: {
+      email: {
+        value: '',
+        valid: false,
+        validationRules: {
+          isEmail: true
+        }
+      },
+      password: {
+        value: '',
+        valid: false,
+        validationRules: {
+          minLength: 6
+        }
+      },
+      confirmPassword: {
+        value: '',
+        valid: false,
+        validationRules: {
+          equaltTo: 'password'
+        }
+      }
+    }
   }
 
   constructor(props) {
@@ -32,6 +55,20 @@ class AuthScreen extends React.Component {
     startMainTabs();
   }
 
+  updateInputState = (key, value) => {
+    this.setState(prevState => {
+      return {
+        controls: {
+          ...prevState.controls,
+          [key]: {
+            ...prevState.controls[key],
+            value: value
+          }
+        }
+      };
+    })
+  }
+
   render () {
     let headingText = null;
 
@@ -49,7 +86,12 @@ class AuthScreen extends React.Component {
           {headingText}
           <MyButton title="Switch to Login" />
           <View style={styles.textInputContainer}>
-            <MyTextInput placeholder="Your Email" style={styles.input} />
+            <MyTextInput
+              placeholder="Your Email"
+              style={styles.input}
+              value={this.state.controls.email.value}
+              onChangeText={(val) => this.updateInputState('email', val)}
+            />
             <View style={this.state.viewMode === 'portrait'
               ? styles.portraitPasswordContainer
               : styles.landscapePasswordContainer
@@ -58,13 +100,23 @@ class AuthScreen extends React.Component {
                 ? styles.portraitPasswordWrapper
                 : styles.landscapePasswordWrapper
               }>
-                <MyTextInput placeholder="Password" style={styles.input} />
+                <MyTextInput
+                  placeholder="Password"
+                  style={styles.input}
+                  value={this.state.controls.password.value}
+                  onChangeText={(val) => this.updateInputState('password', val)}
+                />
               </View>
               <View style={this.state.viewMode === 'portrait'
                 ? styles.portraitPasswordWrapper
                 : styles.landscapePasswordWrapper
               }>
-                <MyTextInput placeholder="Confirm Password" style={styles.input} />
+                <MyTextInput
+                  placeholder="Confirm Password"
+                  style={styles.input}
+                  value={this.state.controls.confirmPassword.value}
+                  onChangeText={(val) => this.updateInputState('confirmPassword', val)}
+                />
               </View>
             </View>
           </View>
