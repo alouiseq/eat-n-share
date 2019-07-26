@@ -7,6 +7,7 @@ import MyTextInput from '../../components/UI/MyTextInput/MyTextInput';
 import MyText from '../../components/UI/MyText/MyText';
 import MyHeadingText from '../../components/UI/MyHeadingText/MyHeadingText';
 import loginImage from '../../assets/food-phone.jpg';
+import validateLogin from '../../util/validations/loginValidations.js'
 
 class AuthScreen extends React.Component {
   state = {
@@ -62,11 +63,27 @@ class AuthScreen extends React.Component {
           ...prevState.controls,
           [key]: {
             ...prevState.controls[key],
+            valid: validateLogin(
+              key,
+              value,
+              this.state.controls[key].validationRules,
+              this.state.controls.password.value
+            ),
             value: value
-          }
+          },
+          // TODO: how to deal with dynamic password change for confirming password
+          // confirmPassword: {
+          //   ...prevState.controls.confirmPassword,
+          //   valid: validateLogin(
+          //     'confirmPassword',
+          //     prevState.controls.confirmPassword.value,
+          //     null,
+          //     value
+          //   )
+          // }
         }
       };
-    })
+    });
   }
 
   render () {
