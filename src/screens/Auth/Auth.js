@@ -1,5 +1,13 @@
 import React from 'react';
-import { Dimensions, ImageBackground, View, StyleSheet } from 'react-native';
+import {
+  Dimensions,
+  ImageBackground,
+  View,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Keyboard,
+  TouchableWithoutFeedback
+} from 'react-native';
 import { connect } from 'react-redux';
 
 import startMainTabs from '../MainTabs/startMainTabs';
@@ -143,44 +151,46 @@ class AuthScreen extends React.Component {
 
     return (
       <ImageBackground source={loginImage} style={styles.loginImage}>
-        <View style={styles.container}>
+        <KeyboardAvoidingView style={styles.container} behavior="padding">
           {headingText}
           <MyButton onPressHandler={this.loginModeToggle}>
             Switch to {this.state.loginMode ? 'Sign up' : 'Login'}
           </MyButton>
-          <View style={styles.textInputContainer}>
-            <MyTextInput
-              placeholder="Your Email"
-              style={styles.input}
-              value={this.state.controls.email.value}
-              onChangeText={(val) => this.updateInputState('email', val)}
-              valid={this.state.controls.email.valid}
-              touched={this.state.controls.email.touched}
-              autoCapitalize={'none'}
-              autoCorrect={false}
-              keyboardType={'email-address'}
-            />
-            <View style={this.state.viewMode === 'portrait'
-              ? styles.portraitPasswordContainer
-              : styles.landscapePasswordContainer
-            }>
-              <View style={this.state.viewMode === 'portrait' || this.state.loginMode
-                ? styles.portraitPasswordWrapper
-                : styles.landscapePasswordWrapper
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View style={styles.textInputContainer}>
+              <MyTextInput
+                placeholder="Your Email"
+                style={styles.input}
+                value={this.state.controls.email.value}
+                onChangeText={(val) => this.updateInputState('email', val)}
+                valid={this.state.controls.email.valid}
+                touched={this.state.controls.email.touched}
+                autoCapitalize={'none'}
+                autoCorrect={false}
+                keyboardType={'email-address'}
+              />
+              <View style={this.state.viewMode === 'portrait'
+                ? styles.portraitPasswordContainer
+                : styles.landscapePasswordContainer
               }>
-                <MyTextInput
-                  placeholder="Password"
-                  style={styles.input}
-                  value={this.state.controls.password.value}
-                  onChangeText={(val) => this.updateInputState('password', val)}
-                  valid={this.state.controls.password.valid}
-                  touched={this.state.controls.password.touched}
-                  secureTextEntry
-                />
+                <View style={this.state.viewMode === 'portrait' || this.state.loginMode
+                  ? styles.portraitPasswordWrapper
+                  : styles.landscapePasswordWrapper
+                }>
+                  <MyTextInput
+                    placeholder="Password"
+                    style={styles.input}
+                    value={this.state.controls.password.value}
+                    onChangeText={(val) => this.updateInputState('password', val)}
+                    valid={this.state.controls.password.valid}
+                    touched={this.state.controls.password.touched}
+                    secureTextEntry
+                  />
+                </View>
+                {confirmPasswordInput}
               </View>
-              {confirmPasswordInput}
             </View>
-          </View>
+          </TouchableWithoutFeedback>
           <MyButton
             onPressHandler={this.loginHandler}
             disabled={!this.state.controls.email.valid
@@ -189,7 +199,7 @@ class AuthScreen extends React.Component {
           >
             Submit
           </MyButton>
-        </View>
+        </KeyboardAvoidingView>
       </ImageBackground>
     );
   }
