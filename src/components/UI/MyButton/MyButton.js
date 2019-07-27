@@ -9,13 +9,24 @@ const styles = StyleSheet.create({
     padding: 5,
     marginBottom: 15,
     backgroundColor: '#33ccff'
+  },
+  disabled: {
+    backgroundColor: '#eee',
+    borderColor: '#aaa'
+  },
+  disabledText: {
+    color: '#aaa'
   }
 });
 
 export default Button = (props) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={props.onPressHandler}>
-      <Text>
+    <TouchableOpacity
+      style={[styles.container, props.disabled ? styles.disabled : null]}
+      onPress={props.onPressHandler}
+      disabled={props.disabled}
+    >
+      <Text style={props.disabled ? styles.disabledText : null}>
         {props.title}
       </Text>
     </TouchableOpacity>
