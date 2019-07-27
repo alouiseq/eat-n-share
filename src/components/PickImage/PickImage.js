@@ -22,10 +22,7 @@ class PickImage extends React.Component {
           <Image style={styles.previewImage} source={SampleImage} />
         </View>
         <View style={styles.button}>
-          <MyButton
-            title="Pick Image"
-            onPress={this.props.onPickImage}
-          />
+          <MyButton onPress={this.props.onPickImage}>Pick Image</MyButton>
         </View>
       </View>
     )

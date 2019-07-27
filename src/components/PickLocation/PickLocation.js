@@ -21,10 +21,7 @@ class MapLocator extends React.Component {
           <Text>Map</Text>
         </View>
         <View style={styles.button}>
-            <MyButton
-              title="Locate me"
-              onPress={this.props.onPickLocation}
-            />
+            <MyButton onPress={this.props.onPickLocation}>Locate me</MyButton>
         </View>
       </View>
     )

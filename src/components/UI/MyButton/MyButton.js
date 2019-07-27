@@ -27,7 +27,7 @@ export default Button = (props) => {
       disabled={props.disabled}
     >
       <Text style={props.disabled ? styles.disabledText : null}>
-        {props.title}
+        {props.children}
       </Text>
     </TouchableOpacity>
   )

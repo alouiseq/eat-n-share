@@ -14,6 +14,7 @@ import { tryAuth } from '../../store/actions/index';
 class AuthScreen extends React.Component {
   state = {
     viewMode: Dimensions.get('screen').height > 500 ? 'portrait' : 'landscape',
+    loginMode: false,   // signup mode on default
     controls: {
       email: {
         value: '',
@@ -99,14 +100,43 @@ class AuthScreen extends React.Component {
     });
   }
 
+  loginModeToggle = () => {
+    this.setState(prevState => {
+      return {
+        loginMode: !prevState.loginMode
+      };
+    });
+  }
+
   render () {
     let headingText = null;
+    let confirmPasswordInput = null;
 
     if (this.state.viewMode === 'portrait') {
       headingText = (
         <MyText style={styles.title}>
-          <MyHeadingText>Please Log In</MyHeadingText>
+          <MyHeadingText>
+            Please {this.state.loginMode ? 'Log In' : 'Sign Up'}
+          </MyHeadingText>
         </MyText>
+      );
+    }
+
+    if (!this.state.loginMode) {
+      confirmPasswordInput = (
+        <View style={this.state.viewMode === 'portrait'
+          ? styles.portraitPasswordWrapper
+          : styles.landscapePasswordWrapper
+        }>
+          <MyTextInput
+            placeholder="Confirm Password"
+            style={styles.input}
+            value={this.state.controls.confirmPassword.value}
+            onChangeText={(val) => this.updateInputState('confirmPassword', val)}
+            valid={this.state.controls.confirmPassword.valid}
+            touched={this.state.controls.confirmPassword.touched}
+          />
+        </View>
       );
     }
 
@@ -114,7 +144,9 @@ class AuthScreen extends React.Component {
       <ImageBackground source={loginImage} style={styles.loginImage}>
         <View style={styles.container}>
           {headingText}
-          <MyButton title="Switch to Login" />
+          <MyButton onPressHandler={this.loginModeToggle}>
+            Switch to {this.state.loginMode ? 'Sign up' : 'Login'}
+          </MyButton>
           <View style={styles.textInputContainer}>
             <MyTextInput
               placeholder="Your Email"
@@ -128,7 +160,7 @@ class AuthScreen extends React.Component {
               ? styles.portraitPasswordContainer
               : styles.landscapePasswordContainer
             }>
-              <View style={this.state.viewMode === 'portrait'
+              <View style={this.state.viewMode === 'portrait' || this.state.loginMode
                 ? styles.portraitPasswordWrapper
                 : styles.landscapePasswordWrapper
               }>
@@ -141,26 +173,17 @@ class AuthScreen extends React.Component {
                   touched={this.state.controls.password.touched}
                 />
               </View>
-              <View style={this.state.viewMode === 'portrait'
-                ? styles.portraitPasswordWrapper
-                : styles.landscapePasswordWrapper
-              }>
-                <MyTextInput
-                  placeholder="Confirm Password"
-                  style={styles.input}
-                  value={this.state.controls.confirmPassword.value}
-                  onChangeText={(val) => this.updateInputState('confirmPassword', val)}
-                  valid={this.state.controls.confirmPassword.valid}
-                  touched={this.state.controls.confirmPassword.touched}
-                />
-              </View>
+              {confirmPasswordInput}
             </View>
           </View>
           <MyButton
-            title="Submit"
             onPressHandler={this.loginHandler}
-            disabled={!this.state.controls.email.valid || !this.state.controls.confirmPassword.valid}
-          />
+            disabled={!this.state.controls.email.valid
+              || !this.state.controls.password.valid
+              || !this.state.controls.confirmPassword.valid && !this.state.loginMode}
+          >
+            Submit
+          </MyButton>
         </View>
       </ImageBackground>
     );
