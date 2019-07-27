@@ -13,6 +13,10 @@ const styles = StyleSheet.create({
     padding: 8,
     marginTop: 8,
     marginBottom: 8
+  },
+  invalid: {
+    backgroundColor: '#f9c0c0',
+    borderColor: 'red'
   }
 });
 
@@ -21,7 +25,7 @@ export default MainInput = (props) => {
     <View style={styles.container}>
       <TextInput
       {...props}
-      style={[styles.textInput, props.style]}
+      style={[styles.textInput, props.style, props.valid || !props.touched ? null : styles.invalid]}
     />
     </View>
   );

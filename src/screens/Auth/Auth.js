@@ -18,21 +18,24 @@ class AuthScreen extends React.Component {
         valid: false,
         validationRules: {
           isEmail: true
-        }
+        },
+        touched: false
       },
       password: {
         value: '',
         valid: false,
         validationRules: {
           minLength: 6
-        }
+        },
+        touched: false
       },
       confirmPassword: {
         value: '',
         valid: false,
         validationRules: {
           equaltTo: 'password'
-        }
+        },
+        touched: false
       }
     }
   }
@@ -61,6 +64,17 @@ class AuthScreen extends React.Component {
       return {
         controls: {
           ...prevState.controls,
+          confirmPassword: {
+            ...prevState.controls.confirmPassword,
+            valid: key === 'password'
+              ? validateLogin(
+                'confirmPassword',
+                prevState.controls.confirmPassword.value,
+                prevState.controls.confirmPassword.validationRules,
+                value
+              )
+              : prevState.controls.confirmPassword.valid
+          },
           [key]: {
             ...prevState.controls[key],
             valid: validateLogin(
@@ -69,18 +83,9 @@ class AuthScreen extends React.Component {
               this.state.controls[key].validationRules,
               this.state.controls.password.value
             ),
-            value: value
+            value: value,
+            touched: true
           },
-          // TODO: how to deal with dynamic password change for confirming password
-          // confirmPassword: {
-          //   ...prevState.controls.confirmPassword,
-          //   valid: validateLogin(
-          //     'confirmPassword',
-          //     prevState.controls.confirmPassword.value,
-          //     null,
-          //     value
-          //   )
-          // }
         }
       };
     });
@@ -108,6 +113,8 @@ class AuthScreen extends React.Component {
               style={styles.input}
               value={this.state.controls.email.value}
               onChangeText={(val) => this.updateInputState('email', val)}
+              valid={this.state.controls.email.valid}
+              touched={this.state.controls.email.touched}
             />
             <View style={this.state.viewMode === 'portrait'
               ? styles.portraitPasswordContainer
@@ -122,6 +129,8 @@ class AuthScreen extends React.Component {
                   style={styles.input}
                   value={this.state.controls.password.value}
                   onChangeText={(val) => this.updateInputState('password', val)}
+                  valid={this.state.controls.password.valid}
+                  touched={this.state.controls.password.touched}
                 />
               </View>
               <View style={this.state.viewMode === 'portrait'
@@ -133,6 +142,8 @@ class AuthScreen extends React.Component {
                   style={styles.input}
                   value={this.state.controls.confirmPassword.value}
                   onChangeText={(val) => this.updateInputState('confirmPassword', val)}
+                  valid={this.state.controls.confirmPassword.valid}
+                  touched={this.state.controls.confirmPassword.touched}
                 />
               </View>
             </View>
