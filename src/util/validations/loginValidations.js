@@ -12,6 +12,8 @@ const validateLogin = (controlKey, value, validationRules, checkValue) => {
       case 'confirmPassword':
         isValid = isValid && confirmPasswordValidator(value, checkValue);
         break;
+      case 'foodPlaceName':
+        isValid = isValid && foodPlaceNameValidator(value, validationRules[rule]);
       default:
         isValid = true;
     }
@@ -31,5 +33,7 @@ const emailValidator = (email, isEmail) => {
 const passwordValidator = (val, minLength) => val.length >= minLength;
 
 const confirmPasswordValidator = (val, checkVal) => val === checkVal;
+
+const foodPlaceNameValidator = val => val !== '';
 
 export default validateLogin;

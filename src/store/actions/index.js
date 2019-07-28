@@ -4,12 +4,13 @@ import {
   TRY_AUTH
 } from '../actions/actionTypes';
 
-export const addItem = (value, image) => {
+export const addItem = (foodPlace, location, image) => {
   return {
     type: ADD_FOOD_PLACE,
     foodPlace: {
       key: Math.random().toString(),
-      value,
+      foodPlace,
+      location,
       image
     }
   };

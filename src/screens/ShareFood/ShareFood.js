@@ -10,6 +10,7 @@ import PickLocation from '../../components/PickLocation/PickLocation';
 import MyText from '../../components/UI/MyText/MyText';
 import MyHeadingText from '../../components/UI/MyHeadingText/MyHeadingText';
 import MyButton from '../../components/UI/MyButton/MyButton';
+import validate from '../../util/validations/loginValidations';
 
 class ShareFoodScreen extends React.Component {
   static navigatorStyle = {
@@ -17,7 +18,20 @@ class ShareFoodScreen extends React.Component {
   }
 
   state = {
-    placeName: ''
+    controls: {
+      foodPlaceName: {
+        value: '',
+        valid: false,
+        touched: false,
+        validationRules: {
+          notEmpty: true
+        }
+      },
+      location: {
+        value: null,
+        valid: false
+      } 
+    }
   }
 
   constructor(props) {
@@ -35,25 +49,43 @@ class ShareFoodScreen extends React.Component {
     }
   }
 
-  onChangeNameHandler = placeName => {
-    this.setState({ placeName });
+  onChangeNameHandler = val => {
+    this.setState(prevState => {
+      return {
+        controls: {
+          ...prevState.controls,
+          foodPlaceName: {
+            ...prevState.controls.foodPlaceName,
+            value: val,
+            valid: validate(val, prevState.controls.foodPlaceName.validationRules),
+            touched: true
+          }
+        }
+      };
+    });
   }
 
   onAddFoodPlaceHandler = () => {
-    const { placeName } = this.state;
-
-    if (placeName.trim() !== '') {
-      this.props.onAddFoodPlace(placeName);
-    }
+    this.props.onAddFoodPlace(
+      this.state.controls.foodPlaceName.value,
+      this.state.controls.location.value,
+      sampleImage
+    );
   }
 
-  onPickImageHandler = () => (
-    alert('hello')
-  )
-
-  onPickLocationHandler = () => (
-    alert('hello')
-  )
+  locationPickedHandler = location => {
+    this.setState(prevState => {
+      return {
+        controls: {
+          ...prevState.controls,
+          location: {
+            value: location,
+            valid: true
+          }
+        }
+      }
+    })
+  }
 
   render () {
     return (
@@ -62,17 +94,21 @@ class ShareFoodScreen extends React.Component {
           <MyText>
             <MyHeadingText>Share a food place with us!</MyHeadingText>
           </MyText>
-          <PickImage onPickImage={this.onPickImageHandler} />
-          <PickLocation onPickLocation={this.onPickLocationHandler} />
+          <PickImage />
+          <PickLocation onLocationPick={this.locationPickedHandler} />
           <FoodPlaceInput
-            placeName={this.state.placeName}
+            placeName={this.state.controls.foodPlaceName.value}
             onChangeText={this.onChangeNameHandler}
           />
           <View style={styles.button}>
             <MyButton
               onPress={this.onAddFoodPlaceHandler}
+              disabled={
+                !this.state.controls.foodPlaceName.valid
+                || !this.state.controls.location.valid
+              }
             >
-              "Share the food place!"
+              Share the food place!
             </MyButton>
           </View>
         </View>
@@ -94,7 +130,7 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddFoodPlace: (foodPlace) => dispatch(addItem(foodPlace, sampleImage))
+    onAddFoodPlace: (foodPlace, location, image) => dispatch(addItem(foodPlace, location, image))
   }
 }
 

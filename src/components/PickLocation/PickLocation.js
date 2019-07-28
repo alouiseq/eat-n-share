@@ -34,6 +34,10 @@ class MapLocator extends React.Component {
       latitude: coords.latitude,
       longitude: coords.longitude
     });
+    this.props.onLocationPick({
+      latitude: coords.latitude,
+      longitude: coords.longitude
+    })
   }
 
   getLocationHandler = () => {
