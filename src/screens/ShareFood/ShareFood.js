@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import FoodPlaceInput from '../../components/FoodPlaceInput/FoodPlaceInput';
 import { addItem } from '../../store/actions/index';
-import sampleImage from '../../../src/assets/lechon.jpg';
 import PickImage from '../../components/PickImage/PickImage';
 import PickLocation from '../../components/PickLocation/PickLocation';
 import MyText from '../../components/UI/MyText/MyText';
@@ -30,7 +29,11 @@ class ShareFoodScreen extends React.Component {
       location: {
         value: null,
         valid: false
-      } 
+      },
+      image: {
+        value: null,
+        valid: false
+      }
     }
   }
 
@@ -69,7 +72,7 @@ class ShareFoodScreen extends React.Component {
     this.props.onAddFoodPlace(
       this.state.controls.foodPlaceName.value,
       this.state.controls.location.value,
-      sampleImage
+      this.state.controls.image.value
     );
   }
 
@@ -87,6 +90,20 @@ class ShareFoodScreen extends React.Component {
     })
   }
 
+  imagePickedHandler = image => {
+    this.setState(prevState => {
+      return {
+        controls: {
+          ...prevState.controls,
+          image: {
+            value: image,
+            valid: true
+          }
+        }
+      }
+    })
+  }
+
   render () {
     return (
       <ScrollView>
@@ -94,7 +111,7 @@ class ShareFoodScreen extends React.Component {
           <MyText>
             <MyHeadingText>Share a food place with us!</MyHeadingText>
           </MyText>
-          <PickImage />
+          <PickImage onImagePick={this.imagePickedHandler} />
           <PickLocation onLocationPick={this.locationPickedHandler} />
           <FoodPlaceInput
             placeName={this.state.controls.foodPlaceName.value}
@@ -106,6 +123,7 @@ class ShareFoodScreen extends React.Component {
               disabled={
                 !this.state.controls.foodPlaceName.valid
                 || !this.state.controls.location.valid
+                || !this.state.controls.image.valid
               }
             >
               Share the food place!

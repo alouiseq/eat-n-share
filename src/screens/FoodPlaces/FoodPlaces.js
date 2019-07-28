@@ -106,12 +106,6 @@ class FoodPlacesScreen extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    foodPlaces: state.foodPlaces.foodPlaces
-  }
-}
-
 const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
@@ -130,5 +124,11 @@ const styles = StyleSheet.create({
     fontSize: 26
   }
 })
+
+const mapStateToProps = state => {
+  return {
+    foodPlaces: state.foodPlaces.foodPlaces
+  }
+}
 
 export default connect(mapStateToProps)(FoodPlacesScreen);
