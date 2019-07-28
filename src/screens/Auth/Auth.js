@@ -153,7 +153,7 @@ class AuthScreen extends React.Component {
       <ImageBackground source={loginImage} style={styles.loginImage}>
         <KeyboardAvoidingView style={styles.container} behavior="padding">
           {headingText}
-          <MyButton onPressHandler={this.loginModeToggle}>
+          <MyButton onPress={this.loginModeToggle}>
             Switch to {this.state.loginMode ? 'Sign up' : 'Login'}
           </MyButton>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -192,7 +192,7 @@ class AuthScreen extends React.Component {
             </View>
           </TouchableWithoutFeedback>
           <MyButton
-            onPressHandler={this.loginHandler}
+            onPress={this.loginHandler}
             disabled={!this.state.controls.email.valid
               || !this.state.controls.password.valid
               || !this.state.controls.confirmPassword.valid && !this.state.loginMode}

@@ -36,6 +36,24 @@ class MapLocator extends React.Component {
     });
   }
 
+  getLocationHandler = () => {
+    navigator.geolocation.getCurrentPosition(pos => {
+      const coordsEvent = {
+        nativeEvent: {
+          coordinate: {
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude
+          }
+        }
+      };
+      this.pickLocationHandler(coordsEvent);
+    },
+    err => {
+      console.log(err);
+      alert('Fetching the position failed! Try again or try picking one manually.');
+    });
+  }
+
   render() {
     let marker = null;
 
@@ -54,7 +72,7 @@ class MapLocator extends React.Component {
           {marker}
         </MapView>
         <View style={styles.button}>
-            <MyButton onPress={this.props.onPickLocation}>Locate me</MyButton>
+            <MyButton onPress={this.getLocationHandler}>Locate me</MyButton>
         </View>
       </View>
     )

@@ -70,7 +70,7 @@ class ShareFoodScreen extends React.Component {
           />
           <View style={styles.button}>
             <MyButton
-              onPressHandler={this.onAddFoodPlaceHandler}
+              onPress={this.onAddFoodPlaceHandler}
             >
               "Share the food place!"
             </MyButton>

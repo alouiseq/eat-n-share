@@ -23,7 +23,7 @@ export default Button = (props) => {
   return (
     <TouchableOpacity
       style={[styles.container, props.disabled ? styles.disabled : null]}
-      onPress={props.onPressHandler}
+      onPress={props.onPress}
       disabled={props.disabled}
     >
       <Text style={props.disabled ? styles.disabledText : null}>
