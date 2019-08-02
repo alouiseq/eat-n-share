@@ -16,11 +16,11 @@ class PickImage extends React.Component {
       } else if (res.error) {
         console.log('Error', res.error);
       } else {
-        const image = { uri: res.uri };
+        const imageURI = { uri: res.uri };
         this.setState({
-          pickedImage: image
+          pickedImage: imageURI
         });
-        this.props.onImagePick(image);
+        this.props.onImagePick({uri: imageURI, base64: res.data});
       }
     });
   }
