@@ -29,14 +29,15 @@ exports.storeImage = functions.https.onRequest((request, response) => {
         destination: '/places/' + uuid + '.jpg',
         metadata: {
           metadata: {
-            contentTYpe: 'image/jpeg',
+            contentType: 'image/jpeg',
             firebaseStorageDownloadTokens: uuid
           }
-        }
+        },
+        resumable: false
       },
       (err, file) => {
         if (!err) {
-          return response.status(201).json({
+          response.status(201).json({
             imageUrl:
               'https://firebasestorage.googleapis.com/v0/b/'
               + bucket.name
@@ -47,7 +48,7 @@ exports.storeImage = functions.https.onRequest((request, response) => {
           });
         } else {
           console.log(err);
-          return response.status(500).json({ error: err });
+          response.status(500).json({ error: err });
         }
       }
     )

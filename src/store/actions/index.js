@@ -6,24 +6,29 @@ import {
 
 export const addItem = (foodPlace, location, image) => {
   return dispatch => {
-    const placeData = {
-      name: foodPlace,
-      location: location
-    };
     fetch('https://us-central1-eat-n-share.cloudfunctions.net/storeImage', {
       method: 'POST',
       body: JSON.stringify({
         image: image.base64
       })
     })
-    // fetch('https://eat-n-share.firebaseio.com/places.json', {
-    //   method: 'POST',
-    //   body: JSON.stringify(placeData)
-    // })
     .catch(err => console.log(err))
     .then(res => res.json())
     .then(parsedRes => {
-      console.log(parsedRes);
+      const placeData = {
+        name: foodPlace,
+        location: location,
+        image: parsedRes.imageUrl
+      };
+      fetch('https://eat-n-share.firebaseio.com/places.json', {
+        method: 'POST',
+        body: JSON.stringify(placeData)
+      })
+      .catch(err => console.log(err))
+      .then(res => res.json())
+      .then(parsedRes => {
+        console.log(parsedRes);
+      });
     });
     // return {
     //   type: ADD_FOOD_PLACE,
