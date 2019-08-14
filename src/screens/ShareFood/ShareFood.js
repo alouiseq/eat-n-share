@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, Button, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 
 import FoodPlaceInput from '../../components/FoodPlaceInput/FoodPlaceInput';
@@ -105,6 +105,23 @@ class ShareFoodScreen extends React.Component {
   }
 
   render () {
+    let submitButton = (
+      <MyButton
+        onPress={this.onAddFoodPlaceHandler}
+        disabled={
+          !this.state.controls.foodPlaceName.valid
+          || !this.state.controls.location.valid
+          || !this.state.controls.image.valid
+        }
+      >
+        Share the food place!
+      </MyButton>
+    );
+
+    if (this.props.isLoading) {
+      submitButton = <ActivityIndicator />;
+    }
+
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -118,16 +135,7 @@ class ShareFoodScreen extends React.Component {
             onChangeText={this.onChangeNameHandler}
           />
           <View style={styles.button}>
-            <MyButton
-              onPress={this.onAddFoodPlaceHandler}
-              disabled={
-                !this.state.controls.foodPlaceName.valid
-                || !this.state.controls.location.valid
-                || !this.state.controls.image.valid
-              }
-            >
-              Share the food place!
-            </MyButton>
+            {submitButton}
           </View>
         </View>
       </ScrollView>
@@ -146,10 +154,15 @@ const styles = StyleSheet.create({
   },
 });
 
+const mapStateToProps = state => {
+  return {
+    isLoading: state.loadingState.isLoading
+  };
+}
 const mapDispatchToProps = dispatch => {
   return {
     onAddFoodPlace: (foodPlace, location, image) => dispatch(addItem(foodPlace, location, image))
   }
 }
 
-export default connect(null, mapDispatchToProps)(ShareFoodScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(ShareFoodScreen);
