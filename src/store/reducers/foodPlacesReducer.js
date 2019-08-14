@@ -1,37 +1,19 @@
 import {
-  ADD_FOOD_PLACE,
-  DELETE_FOOD_PLACE
+  SET_FOOD_PLACES
 } from '../actions/actionTypes';
 
 const initialState = {
-  foodPlaces: [
-    // {
-    //   key: Math.random(),
-    //   value: 'Filipino',
-    //   image: sampleImage
-    // },
-  ],
-}
+  foodPlaces: []
+};
 
 export default reducer = (state = initialState, action) => {
   switch(action.type) {
-    case ADD_FOOD_PLACE:
+    case SET_FOOD_PLACES:
       return {
         ...state,
-        foodPlaces: [
-          ...state.foodPlaces,
-          action.foodPlace
-        ]
-      };
-    case DELETE_FOOD_PLACE:
-      const foodPlaces = state.foodPlaces.filter(fp => (
-        fp.key !== action.foodPlaceKey
-      ));
-      return {
-        ...state,
-        foodPlaces,
+        foodPlaces: action.foodPlaces
       };
     default:
       return state;
   }
-}
+};

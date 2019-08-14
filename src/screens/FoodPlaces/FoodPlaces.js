@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native
 import { connect } from 'react-redux';
 
 import FoodPlaceList from '../../components/FoodPlaceList/FoodPlaceList';
+import { getFoodPlaces } from '../../store/actions/index';
 
 class FoodPlacesScreen extends React.Component {
   static navigatorStyle = {
@@ -18,6 +19,10 @@ class FoodPlacesScreen extends React.Component {
   constructor(props) {
     super(props);
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
+  }
+
+  componentDidMount () {
+    this.props.onLoadPlaces();
   }
 
   onNavigatorEvent = event => {
@@ -128,7 +133,13 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     foodPlaces: state.foodPlaces.foodPlaces
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps)(FoodPlacesScreen);
+const mapDispatchToProps = dispatch => {
+  return {
+    onLoadPlaces: () => dispatch(getFoodPlaces())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FoodPlacesScreen);

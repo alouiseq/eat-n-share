@@ -9,7 +9,7 @@ const FoodPlaceList = (props) => {
       data={props.foodPlaces}
       renderItem={(info) => (
         <ListItem
-          foodPlace={info.item.foodPlace}
+          foodPlace={info.item.name}
           foodPlaceImage={info.item.image}
           onItemSelect={() => props.onItemSelect(info.item.key)}
         />

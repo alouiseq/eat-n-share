@@ -1,6 +1,5 @@
 import {
-  ADD_FOOD_PLACE,
-  DELETE_FOOD_PLACE,
+  SET_FOOD_PLACES,
   TRY_AUTH,
   START_LOADING,
   STOP_LOADING
@@ -40,24 +39,39 @@ export const addItem = (foodPlace, location, image) => {
       console.log(err);
       dispatch(stopLoading());
     });
-    // return {
-    //   type: ADD_FOOD_PLACE,
-    //   foodPlace: {
-    //     key: Math.random().toString(),
-    //     foodPlace,
-    //     location,
-    //     image
-    //   }
-    // };
   }
 };
 
-export const deleteItem = (key) => {
+export const getFoodPlaces = () => {
+  return dispatch => {
+    fetch('https://eat-n-share.firebaseio.com/places.json')
+    .then(res => res.json())
+    .then(parsedRes => {
+      const foodPlaces = [];
+      for (let key in parsedRes) {
+        foodPlaces.push({
+          ...parsedRes[key],
+          image: {
+            uri: parsedRes[key].image
+          },
+          key
+        });
+      }
+      dispatch(setFoodPlaces(foodPlaces));
+    })
+    .catch(err => {
+      alert("Something went wrong!");
+      console.log(err);
+    }); 
+  }
+}
+
+export const setFoodPlaces = foodPlaces => {
   return {
-    type: DELETE_FOOD_PLACE,
-    foodPlaceKey: key
-  };
-};
+    type: SET_FOOD_PLACES,
+    foodPlaces: foodPlaces
+  }
+}
 
 export const tryAuth = (authData) => ({
   type: TRY_AUTH,

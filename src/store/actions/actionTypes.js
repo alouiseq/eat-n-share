@@ -1,5 +1,4 @@
-export const ADD_FOOD_PLACE = 'ADD_FOOD_PLACE';
-export const DELETE_FOOD_PLACE = 'DELETE_FOOD_PLACE';
+export const SET_FOOD_PLACES = 'SET_FOOD_PLACES';
 
 export const TRY_AUTH = 'TRY_AUTH';
 

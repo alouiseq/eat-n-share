@@ -20,7 +20,7 @@ class FoodPlaceDetail extends React.Component {
             source={this.props.selectedItem.image}
           />
           <Text style={styles.foodPlaceDetailText}>
-            {this.props.selectedItem.foodPlace}
+            {this.props.selectedItem.name}
           </Text>
         </View>
         <View>
