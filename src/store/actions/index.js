@@ -15,10 +15,6 @@ export const addItem = (foodPlace, location, image) => {
         image: image.base64
       })
     })
-    .catch(err => {
-      console.log(err);
-      dispatch(stopLoading());
-    })
     .then(res => res.json())
     .then(parsedRes => {
       const placeData = {
@@ -30,15 +26,19 @@ export const addItem = (foodPlace, location, image) => {
         method: 'POST',
         body: JSON.stringify(placeData)
       })
-      .catch(err => {
-        console.log(err);
-        dispatch(stopLoading());
-      })
       .then(res => res.json())
       .then(parsedRes => {
         console.log(parsedRes);
         dispatch(stopLoading());
+      })
+      .catch(err => {
+        console.log(err);
+        dispatch(stopLoading());
       });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch(stopLoading());
     });
     // return {
     //   type: ADD_FOOD_PLACE,
