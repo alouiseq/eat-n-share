@@ -1,7 +1,9 @@
 import {
   ADD_FOOD_PLACE,
   DELETE_FOOD_PLACE,
-  TRY_AUTH
+  TRY_AUTH,
+  LOADING,
+  STOP_LOADING
 } from '../actions/actionTypes';
 
 export const addItem = (foodPlace, location, image) => {
@@ -53,3 +55,6 @@ export const tryAuth = (authData) => ({
   type: TRY_AUTH,
   authData: authData
 });
+
+export const startLoading = () => ({ type: LOADING });
+export const stopLoading = () => ({ type: STOP_LOADING });

@@ -2,9 +2,11 @@ import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
 import foodPlaceReducer from './reducers/foodPlacesReducer';
+import loadingReducer from './reducers/loadingReducer';
 
 const rootReducer = combineReducers({
-  foodPlaces: foodPlaceReducer
+  foodPlaces: foodPlaceReducer,
+  loadingState: loadingReducer
 });
 
 let composeEnhancers = compose;
